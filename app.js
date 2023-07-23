@@ -72,12 +72,17 @@ const updateOneTour = (requset, response) => {
     });
   } else {
     const updatedTour = Object.assign(tourToUpdate, requset.body);
-    response.status(200).json({
-      status: "success",
-      data: {
-        tour: updatedTour,
-      },
-    });
+    const index = tours.indexOf(tourToUpdate);
+    tours[index] = updatedTour;
+    fs.writeFile("./dev-data/data/tours-simple.json", JSON.stringify(tours), (err)=>{
+      response.status(200).json({
+        status: "success",
+        data: {
+          tour: updatedTour,
+        },
+      });
+    })
+   
   }
 };
 
